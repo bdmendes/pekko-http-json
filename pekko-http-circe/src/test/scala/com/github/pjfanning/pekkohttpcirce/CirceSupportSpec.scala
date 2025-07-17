@@ -72,6 +72,12 @@ final class CirceSupportSpec
         .to[RequestEntity]
         .flatMap(Unmarshal(_).to[Foo])
         .map(_ shouldBe foo)
+
+      val fooMap = Map("foo" -> Foo("bar"))
+      Marshal(fooMap)
+        .to[RequestEntity]
+        .flatMap(Unmarshal(_).to[Map[String, Foo]])
+        .map(_ shouldBe fooMap)
     }
 
     "provide proper error messages for requirement errors" in {
